@@ -1,13 +1,15 @@
 import { useRoutes, BrowserRouter, Navigate } from "react-router-dom";
 import { AdminAuthProvider } from "./context/AdminAuthContext";
 import adminRoutes from "./router/adminRoutes";
+import businessRoutes from "./router/businessRoutes";
 import "./styles/index.scss";
 
 
 const AppRoutes = () => {
   const element = useRoutes([
     { path: "/", element: <Navigate to="/admin/login" replace /> }, 
-    ...adminRoutes, 
+    ...adminRoutes,
+    ...businessRoutes 
   ]);
   return element;
 };

@@ -41,16 +41,38 @@ const AdminHotelListPage = () => {
         <button className="btn btn-primary" onClick={() => navigate('/admin/hotels/new')}>+ 호텔 등록</button>
       </div>
 
-      <div className="filter-section card">
-        <div className="filter-grid">
-          <input type="text" placeholder="호텔명 검색..." value={filters.search} onChange={(e) => setFilters({...filters, search: e.target.value})} />
-          <select value={filters.status} onChange={(e) => setFilters({...filters, status: e.target.value})}>
+      <div className="filter-section card" style={{padding:'20px'}}>
+        <div className="filter-grid" style={{display:'flex', gap:'15px', alignItems:'center'}}>
+          {/* ★ 검색창 CSS 꾸미기 ★ */}
+          <div style={{position:'relative', flex:1}}>
+            <span style={{position:'absolute', left:'12px', top:'50%', transform:'translateY(-50%)', fontSize:'1.2rem'}}>🔍</span>
+            <input 
+              type="text" 
+              placeholder="호텔명으로 검색하세요..." 
+              value={filters.search} 
+              onChange={(e) => setFilters({...filters, search: e.target.value})} 
+              style={{
+                width:'100%', 
+                padding:'12px 12px 12px 40px', 
+                border:'2px solid #e2e8f0', 
+                borderRadius:'30px', 
+                fontSize:'1rem',
+                outline:'none',
+                transition: 'border-color 0.2s',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.03)'
+              }}
+              onFocus={(e) => e.target.style.borderColor = '#3b82f6'}
+              onBlur={(e) => e.target.style.borderColor = '#e2e8f0'}
+            />
+          </div>
+          
+          <select value={filters.status} onChange={(e) => setFilters({...filters, status: e.target.value})} style={{padding:'10px', borderRadius:'8px', border:'1px solid #ddd'}}>
             <option value="">전체 상태</option>
             <option value="approved">운영중</option>
             <option value="pending">승인대기</option>
             <option value="rejected">승인거부</option>
           </select>
-          <select value={filters.region} onChange={(e) => setFilters({...filters, region: e.target.value})}>
+          <select value={filters.region} onChange={(e) => setFilters({...filters, region: e.target.value})} style={{padding:'10px', borderRadius:'8px', border:'1px solid #ddd'}}>
             <option value="">전체 지역</option>
             <option value="서울">서울</option>
             <option value="부산">부산</option>

@@ -7,9 +7,9 @@ const AdminReviewTable = ({ reviews, onStatusChange, onDelete }) => {
         <thead>
           <tr>
             <th>호텔명</th>
+            <th>내용 (신고 사유)</th> {/* 헤더 수정 */}
             <th>작성자</th>
             <th>별점</th>
-            <th style={{width: '35%'}}>내용</th>
             <th>상태</th>
             <th style={{width: '180px'}}>관리</th>
           </tr>
@@ -18,14 +18,22 @@ const AdminReviewTable = ({ reviews, onStatusChange, onDelete }) => {
           {reviews.map((review) => (
             <tr key={review.id}>
               <td>{review.hotelName}</td>
+              <td>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <Link to={`/admin/reviews/${review.id}`} style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 500 }}>
+                    {review.title}
+                  </Link>
+                  <span style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '2px' }}>{review.comment}</span>
+                  {/* ★ 신고 내용 표시 추가 ★ */}
+                  {review.reported && review.reportReason && (
+                    <span style={{ color: '#ef4444', fontSize: '0.8rem', fontWeight: 'bold', marginTop: '4px' }}>
+                      (🚨 신고: {review.reportReason})
+                    </span>
+                  )}
+                </div>
+              </td>
               <td>{review.guestName}</td>
               <td style={{ color: '#f59e0b' }}>{"⭐".repeat(review.rating)}</td>
-              <td>
-                {/* 여기 글자 색상을 파란색(#2563eb)으로 변경했습니다 */}
-                <Link to={`/admin/reviews/${review.id}`} style={{ color: '#2563eb', textDecoration: 'none', fontWeight: 500 }}>
-                  {review.title}
-                </Link>
-              </td>
               <td>
                 <span className={`badge ${
                   review.status === 'approved' ? 'badge-success' : 
