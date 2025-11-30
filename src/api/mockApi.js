@@ -341,3 +341,47 @@ export const mockStatsApi = {
     });
   },
 };
+
+// ★ 여기부터 새로 추가된 쿠폰 관련 Mock API 입니다 ★
+export const mockCouponApi = {
+  getCoupons: async () => {
+    await delay();
+    // mockCoupons 배열을 그대로 반환
+    return createResponse({ coupons: [...mockCoupons] });
+  },
+
+  getCouponById: async (id) => {
+    await delay();
+    const coupon = mockCoupons.find((c) => c.id === parseInt(id));
+    if (!coupon) throw new Error("Coupon not found");
+    return createResponse(coupon);
+  },
+
+  createCoupon: async (data) => {
+    await delay();
+    const newCoupon = {
+      id: mockCoupons.length + 1,
+      ...data,
+      usedCount: 0,
+      status: "active",
+      createdAt: new Date().toISOString(),
+    };
+    mockCoupons.push(newCoupon);
+    return createResponse(newCoupon);
+  },
+
+  updateCoupon: async (id, data) => {
+    await delay();
+    const index = mockCoupons.findIndex((c) => c.id === parseInt(id));
+    if (index === -1) throw new Error("Coupon not found");
+    mockCoupons[index] = { ...mockCoupons[index], ...data };
+    return createResponse(mockCoupons[index]);
+  },
+
+  deleteCoupon: async (id) => {
+    await delay();
+    const index = mockCoupons.findIndex((c) => c.id === parseInt(id));
+    if (index > -1) mockCoupons.splice(index, 1);
+    return createResponse({ message: "Coupon deleted" });
+  },
+};
