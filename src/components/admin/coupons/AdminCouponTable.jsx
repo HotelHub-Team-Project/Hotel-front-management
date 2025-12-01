@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
-const AdminCouponTable = ({ coupons, onDelete }) => {
+// readOnly prop 추가 (기본값 false)
+const AdminCouponTable = ({ coupons, onDelete, readOnly = false }) => {
   return (
     <div className="table-wrapper card">
       <table className="admin-table">
@@ -12,7 +13,8 @@ const AdminCouponTable = ({ coupons, onDelete }) => {
             <th>할인 혜택</th>
             <th>기간</th>
             <th>상태</th>
-            <th>관리</th>
+            {/* 읽기 전용이 아닐 때만 관리 컬럼 표시 */}
+            {!readOnly && <th>관리</th>}
           </tr>
         </thead>
         <tbody>
@@ -36,15 +38,23 @@ const AdminCouponTable = ({ coupons, onDelete }) => {
                   {coupon.status === 'active' ? '진행중' : '종료됨'}
                 </span>
               </td>
-              <td>
-                <div style={{display:'flex', gap:'5px'}}>
-                    <Link to={`/admin/coupons/${coupon.id}/edit`} className="btn btn-outline" style={{padding:'4px 8px', fontSize:'0.8rem'}}>수정</Link>
-                    <button onClick={() => onDelete(coupon.id)} className="btn btn-danger-sm">삭제</button>
-                </div>
-              </td>
+              {/* 읽기 전용이 아닐 때만 수정/삭제 버튼 표시 */}
+              {!readOnly && (
+                <td>
+                  <div style={{display:'flex', gap:'5px'}}>
+                      <Link to={`/admin/coupons/${coupon.id}/edit`} className="btn btn-outline" style={{padding:'4px 8px', fontSize:'0.8rem'}}>수정</Link>
+                      <button onClick={() => onDelete(coupon.id)} className="btn btn-danger-sm">삭제</button>
+                  </div>
+                </td>
+              )}
             </tr>
           )) : (
-            <tr><td colSpan="7" style={{textAlign:'center', padding:'20px'}}>등록된 쿠폰이 없습니다.</td></tr>
+            <tr>
+                {/* 컬럼 수에 맞춰 colspan 조정 */}
+                <td colSpan={readOnly ? "6" : "7"} style={{textAlign:'center', padding:'20px'}}>
+                    등록된 쿠폰이 없습니다.
+                </td>
+            </tr>
           )}
         </tbody>
       </table>

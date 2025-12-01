@@ -7,8 +7,9 @@ import BusinessMyHotelPage from "../pages/business/BusinessMyHotelPage";
 import BusinessBookingPage from "../pages/business/BusinessBookingPage";
 import BusinessReviewPage from "../pages/business/BusinessReviewPage";
 import BusinessCouponPage from "../pages/business/BusinessCouponPage";
-import AdminSettingsPage from "../pages/admin/AdminSettingsPage"; // 재사용
-import AdminMyProfilePage from "../pages/admin/AdminMyProfilePage"; // 재사용
+// ★ 새로 만든 페이지 import
+import BusinessSettingsPage from "../pages/business/BusinessSettingsPage";
+import BusinessMyProfilePage from "../pages/business/BusinessMyProfilePage";
 
 const businessRoutes = [
   { path: "/business/login", element: <BusinessLoginPage /> },
@@ -23,8 +24,9 @@ const businessRoutes = [
       { path: "bookings", element: <BusinessBookingPage /> },
       { path: "reviews", element: <BusinessReviewPage /> },
       { path: "coupons", element: <BusinessCouponPage /> },
-      { path: "settings", element: <AdminSettingsPage /> }, // 기능 동일하여 재사용
-      { path: "me", element: <AdminMyProfilePage /> }, // 기능 동일하여 재사용
+      // ★ 라우트 연결 ★
+      { path: "settings", element: <BusinessSettingsPage /> },
+      { path: "me", element: <BusinessMyProfilePage /> },
     ],
   },
 ];
